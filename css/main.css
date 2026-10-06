@@ -1,0 +1,192 @@
+/* Main Design System & Theme Variables */
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Font Families */
+  --font-ui: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-serif: 'Lora', Georgia, serif;
+
+  /* Theme: Light (Default) */
+  --bg-primary: #FAF8F5;
+  --bg-secondary: #FFFFFF;
+  --bg-tertiary: #F2EFEA;
+  --bg-glass: rgba(255, 255, 255, 0.85);
+  
+  --text-primary: #2C2A29;
+  --text-secondary: #66605C;
+  --text-muted: #948E88;
+  
+  --border-color: #E6E1DA;
+  --border-subtle: #F0ECE6;
+
+  --accent-primary: #4A6B5D; /* Calm Sage */
+  --accent-primary-hover: #3B574B;
+  --accent-light: #EBF2EE;
+  --accent-text: #2C453A;
+
+  --accent-warm: #D97745; /* Soft Terracotta */
+  --accent-warm-light: #FDF3ED;
+
+  --shadow-sm: 0 2px 8px rgba(44, 42, 41, 0.04);
+  --shadow-md: 0 8px 24px rgba(44, 42, 41, 0.06);
+  --shadow-lg: 0 16px 40px rgba(44, 42, 41, 0.1);
+  --focus-ring: 0 0 0 3px rgba(74, 107, 93, 0.25);
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+  --bg-primary: #141619;
+  --bg-secondary: #1E2126;
+  --bg-tertiary: #282C34;
+  --bg-glass: rgba(30, 33, 38, 0.85);
+  
+  --text-primary: #ECEAE6;
+  --text-secondary: #AAA69E;
+  --text-muted: #736F68;
+  
+  --border-color: #2F343D;
+  --border-subtle: #242830;
+
+  --accent-primary: #6B9A85;
+  --accent-primary-hover: #83B29D;
+  --accent-light: #1D2A24;
+  --accent-text: #A8D6C1;
+
+  --accent-warm: #E08959;
+  --accent-warm-light: #2C1E17;
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.4);
+  --focus-ring: 0 0 0 3px rgba(107, 154, 133, 0.35);
+}
+
+/* Warm Sepia Theme */
+[data-theme="sepia"] {
+  --bg-primary: #F4EBE1;
+  --bg-secondary: #FCF7F0;
+  --bg-tertiary: #EAE0D3;
+  --bg-glass: rgba(252, 247, 240, 0.88);
+  
+  --text-primary: #382E25;
+  --text-secondary: #6B5B4E;
+  --text-muted: #9E8C7D;
+  
+  --border-color: #E2D3C4;
+  --border-subtle: #EFE4D8;
+
+  --accent-primary: #8C5B3F;
+  --accent-primary-hover: #734830;
+  --accent-light: #F7EDE6;
+  --accent-text: #543320;
+
+  --accent-warm: #C86D3B;
+  --accent-warm-light: #FAF0E8;
+
+  --shadow-sm: 0 2px 8px rgba(56, 46, 37, 0.05);
+  --shadow-md: 0 8px 24px rgba(56, 46, 37, 0.08);
+  --shadow-lg: 0 16px 40px rgba(56, 46, 37, 0.12);
+  --focus-ring: 0 0 0 3px rgba(140, 91, 63, 0.25);
+}
+
+/* Reset & Base Styles */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  font-family: var(--font-ui);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Utility Focus States for Accessibility */
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+button, input, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all var(--transition-fast);
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+a {
+  color: var(--accent-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Typography Helpers */
+.serif {
+  font-family: var(--font-serif);
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+.text-sm {
+  font-size: 0.875rem;
+}
+
+.text-xs {
+  font-size: 0.75rem;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.font-bold {
+  font-weight: 700;
+}
