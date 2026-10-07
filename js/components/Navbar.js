@@ -58,6 +58,19 @@ window.Navbar = function Navbar({ currentRoute, setRoute, user, onNewEntry, entr
         </button>
 
         <button
+          className={`nav-item ${currentRoute === 'garden' ? 'active' : ''}`}
+          onClick={() => setRoute('garden')}
+          title="Memory Garden — browse your entries as glowing lanterns"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 2C8 2 5 5.5 5 9c0 2.4 1.2 4.5 3 5.8V17h8v-2.2c1.8-1.3 3-3.4 3-5.8 0-3.5-3-7-7-7z"/>
+            <line x1="9" y1="17" x2="9" y2="21"/><line x1="15" y1="17" x2="15" y2="21"/>
+            <line x1="8" y1="21" x2="16" y2="21"/>
+          </svg>
+          <span>Garden</span>
+        </button>
+
+        <button
           className={`nav-item ${currentRoute === 'profile' ? 'active' : ''}`}
           onClick={() => setRoute('profile')}
         >

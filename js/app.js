@@ -4,7 +4,7 @@
     // Current authenticated user state
     const [user, setUser] = React.useState(() => window.AuthService.getCurrentUser());
     
-    // Active Screen Route: 'home' | 'write' | 'history' | 'profile' | 'auth'
+    // Active Screen Route: 'home' | 'write' | 'history' | 'profile' | 'garden' | 'auth'
     const [currentRoute, setRoute] = React.useState(() => (user ? 'home' : 'auth'));
 
     // Entry currently being edited (null for new entry)
@@ -209,6 +209,15 @@
                 onClearDemo={handleClearDemo}
                 onClearAllEntries={handleClearAllEntries}
                 showToast={showToast}
+              />
+            )}
+
+            {currentRoute === 'garden' && (
+              <window.MemoryGardenScreen
+                user={user}
+                entries={entries}
+                onNavigateWrite={handleStartNewEntry}
+                onBack={() => setRoute('home')}
               />
             )}
           </main>

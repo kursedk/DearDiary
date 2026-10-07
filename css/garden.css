@@ -1,0 +1,634 @@
+/* ============================================================
+   Memory Garden — Styles
+   ============================================================ */
+
+/* ---------- Scene Wrapper ---------- */
+.garden-page {
+  position: relative;
+  width: 100%;
+  min-height: calc(100vh - 64px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Full-bleed sky: sits behind everything */
+.garden-scene {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  min-height: 520px;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 0%, #1a1035 0%, #0d1b2a 55%, #112233 100%);
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.garden-scene:active { cursor: grabbing; }
+
+/* Stars background */
+.garden-stars {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 10% 15%, rgba(255,255,255,0.7) 0%, transparent 100%),
+    radial-gradient(1px 1px at 25% 40%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(2px 2px at 38% 8%, rgba(255,255,255,0.6) 0%, transparent 100%),
+    radial-gradient(1px 1px at 52% 28%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 63% 12%, rgba(255,255,255,0.7) 0%, transparent 100%),
+    radial-gradient(1px 1px at 75% 35%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(2px 2px at 82% 5%, rgba(255,255,255,0.6) 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 22%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 4% 55%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 17% 68%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 44% 60%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 68% 50%, rgba(255,255,255,0.6) 0%, transparent 100%),
+    radial-gradient(1px 1px at 88% 62%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 30% 78%, rgba(255,255,255,0.2) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 58% 82%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 72% 75%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 95% 80%, rgba(255,255,255,0.2) 0%, transparent 100%);
+  animation: gardenTwinkle 6s ease-in-out infinite alternate;
+}
+
+@keyframes gardenTwinkle {
+  0%   { opacity: 0.7; }
+  50%  { opacity: 1; }
+  100% { opacity: 0.8; }
+}
+
+/* Mist / ground fog */
+.garden-mist {
+  position: absolute;
+  bottom: 0;
+  left: -10%;
+  width: 120%;
+  height: 38%;
+  background: linear-gradient(
+    to top,
+    rgba(100, 160, 130, 0.18) 0%,
+    rgba(80, 130, 110, 0.10) 40%,
+    transparent 100%
+  );
+  border-radius: 50% 50% 0 0 / 40px 40px 0 0;
+  pointer-events: none;
+  animation: mistDrift 12s ease-in-out infinite alternate;
+}
+
+@keyframes mistDrift {
+  0%   { transform: translateX(-3%) scaleX(1.03); }
+  100% { transform: translateX(3%)  scaleX(0.97); }
+}
+
+/* Ground band */
+.garden-ground {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 90px;
+  background: linear-gradient(to top, #1a3028 0%, transparent 100%);
+  pointer-events: none;
+}
+
+/* ---------- Viewport (panning container) ---------- */
+.garden-viewport {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
+/* ---------- Lanterns ---------- */
+.garden-lantern-wrap {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  cursor: pointer;
+  transform-origin: bottom center;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.garden-lantern-wrap:hover,
+.garden-lantern-wrap:focus-visible {
+  transform: translateY(-8px) scale(1.05);
+  outline: none;
+}
+
+.garden-lantern-wrap:focus-visible .lantern-body {
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.5), var(--lantern-glow);
+}
+
+/* String */
+.lantern-string {
+  width: 2px;
+  height: 28px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.3), rgba(255,255,255,0.1));
+  border-radius: 1px;
+  margin-bottom: -2px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Body */
+.lantern-body {
+  position: relative;
+  border-radius: 12px 12px 16px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: box-shadow 0.3s ease;
+}
+
+.lantern-body::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  border: 1.5px solid rgba(255,255,255,0.18);
+  pointer-events: none;
+}
+
+/* inner glow */
+.lantern-glow-inner {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at 40% 35%, rgba(255,255,255,0.5) 0%, transparent 60%);
+  opacity: 0.55;
+  animation: lanternPulse 3.5s ease-in-out infinite;
+}
+
+@keyframes lanternPulse {
+  0%   { opacity: 0.45; transform: scale(0.97); }
+  50%  { opacity: 0.70; transform: scale(1.02); }
+  100% { opacity: 0.45; transform: scale(0.97); }
+}
+
+@keyframes lanternSway {
+  0%   { transform: rotate(-3.5deg); }
+  50%  { transform: rotate( 3.5deg); }
+  100% { transform: rotate(-3.5deg); }
+}
+
+/* outer ambient glow */
+.lantern-body::after {
+  content: '';
+  position: absolute;
+  inset: -14px;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.garden-lantern-wrap:hover .lantern-body::after,
+.garden-lantern-wrap.selected .lantern-body::after {
+  opacity: 1;
+}
+
+/* Selected state ring */
+.garden-lantern-wrap.selected .lantern-body {
+  transform: scale(1.08);
+}
+
+/* Label under lantern */
+.lantern-label {
+  margin-top: 8px;
+  max-width: 90px;
+  text-align: center;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.25;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  pointer-events: none;
+}
+
+/* Mood-specific colour schemes — set on .lantern-body via inline style */
+
+/* Tooltip */
+.lantern-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(13, 22, 35, 0.88);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  padding: 0.4rem 0.7rem;
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.8);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  z-index: 30;
+}
+
+.garden-lantern-wrap:hover .lantern-tooltip,
+.garden-lantern-wrap:focus-visible .lantern-tooltip {
+  opacity: 1;
+}
+
+/* ---------- Entry Detail Panel ---------- */
+.garden-detail-panel {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: min(420px, 96vw);
+  background: rgba(13, 22, 35, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-left: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  flex-direction: column;
+  z-index: 50;
+  animation: panelSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+@keyframes panelSlideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+
+.garden-detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.25rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  flex-shrink: 0;
+}
+
+.garden-detail-back-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.85rem;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 999px;
+  color: rgba(255,255,255,0.8);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.garden-detail-back-btn:hover {
+  background: rgba(255,255,255,0.16);
+  color: #fff;
+}
+
+.garden-detail-close-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.7);
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.garden-detail-close-btn:hover { background: rgba(255,255,255,0.18); }
+
+.garden-detail-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem 1.25rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.15) transparent;
+}
+
+.garden-detail-body::-webkit-scrollbar { width: 6px; }
+.garden-detail-body::-webkit-scrollbar-track { background: transparent; }
+.garden-detail-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
+
+.garden-detail-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.85rem;
+}
+
+.garden-detail-mood-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.9);
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.18);
+}
+
+.garden-detail-date {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.45);
+  font-style: italic;
+}
+
+.garden-detail-title {
+  font-family: var(--font-serif);
+  font-size: 1.22rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.95);
+  line-height: 1.4;
+  margin-bottom: 1rem;
+}
+
+.garden-detail-divider {
+  width: 40px;
+  height: 2px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 1px;
+  margin: 1rem 0;
+}
+
+.garden-detail-content {
+  font-size: 0.92rem;
+  line-height: 1.75;
+  color: rgba(255,255,255,0.72);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.garden-detail-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 1.1rem;
+}
+
+.garden-detail-tag {
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.55);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.garden-detail-images {
+  margin-top: 1.25rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 0.6rem;
+}
+
+.garden-detail-image-thumb {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1.5px solid rgba(255,255,255,0.1);
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.garden-detail-image-thumb:hover {
+  transform: scale(1.04);
+  border-color: rgba(255,255,255,0.35);
+}
+
+/* ---------- Top Bar ---------- */
+.garden-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.25rem;
+  background: rgba(13, 22, 35, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  z-index: 20;
+  flex-shrink: 0;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.garden-topbar-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.garden-topbar-title {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.9);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.garden-topbar-subtitle {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.4);
+  margin-top: 0.15rem;
+}
+
+.garden-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.garden-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.42rem 0.95rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  border: none;
+}
+
+.garden-btn-ghost {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.75);
+}
+.garden-btn-ghost:hover { background: rgba(255,255,255,0.14); color: #fff; }
+
+.garden-btn-vr {
+  background: linear-gradient(135deg, #4a2d8a 0%, #7c3aed 100%);
+  border: 1px solid rgba(167,139,250,0.4);
+  color: #fff;
+  box-shadow: 0 2px 12px rgba(124,58,237,0.35);
+}
+.garden-btn-vr:hover { filter: brightness(1.12); box-shadow: 0 4px 20px rgba(124,58,237,0.5); }
+
+.garden-btn-exit {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  color: rgba(255,255,255,0.65);
+  font-size: 0.78rem;
+  padding: 0.38rem 0.85rem;
+}
+.garden-btn-exit:hover { background: rgba(255,255,255,0.14); color: #fff; }
+
+/* ---------- Controls Hint ---------- */
+.garden-controls-hint {
+  position: absolute;
+  bottom: 1.1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(13, 22, 35, 0.65);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 999px;
+  padding: 0.4rem 1rem;
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.45);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* ---------- Empty State ---------- */
+.garden-empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.garden-empty-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  animation: floatBob 4s ease-in-out infinite;
+}
+
+@keyframes floatBob {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+.garden-empty-title {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.88);
+  margin-bottom: 0.6rem;
+}
+
+.garden-empty-desc {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.45);
+  max-width: 320px;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.garden-empty-cta {
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.4rem;
+  background: rgba(255,255,255,0.1);
+  border: 1.5px solid rgba(255,255,255,0.2);
+  border-radius: 999px;
+  color: rgba(255,255,255,0.85);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.garden-empty-cta:hover { background: rgba(255,255,255,0.2); color: #fff; }
+
+/* ---------- VR Notice ---------- */
+.garden-vr-notice {
+  background: rgba(124,58,237,0.12);
+  border: 1px solid rgba(124,58,237,0.25);
+  border-radius: 10px;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.73rem;
+  color: rgba(167,139,250,0.85);
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+/* ---------- Floating particles ---------- */
+@keyframes particleFloat {
+  0%   { transform: translateY(0);    opacity: 0.6; }
+  100% { transform: translateY(-80px); opacity: 0; }
+}
+
+.garden-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.5);
+  pointer-events: none;
+  animation: particleFloat linear infinite;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 640px) {
+  .garden-detail-panel {
+    width: 100%;
+    top: auto;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    border-left: none;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    max-height: 62vh;
+    animation: panelSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes panelSlideUp {
+    from { transform: translateY(100%); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+  }
+
+  .garden-controls-hint { display: none; }
+}
+
+/* ---------- Accessibility: reduce motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .lantern-glow-inner,
+  .garden-stars,
+  .garden-mist,
+  .garden-empty-icon,
+  .garden-particle { animation: none !important; }
+
+  .garden-lantern-wrap { transition: none; }
+  .garden-detail-panel { animation: none; }
+}
